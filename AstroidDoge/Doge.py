@@ -48,6 +48,75 @@ def load_image(path):
         print(f"Error loading image: {path}")
         raise SystemExit(e)
     
+def get_username():
+    screen2 = pygame.display.set_mode((400, 200))
+    pygame.display.set_caption("Enter Username! You're on the leaderbord!!")
+
+    white = (255,255, 255)
+    black = (0,0,0)
+    gray = (200, 200, 200)
+    blue = (100, 149, 237)
+    dark_blue = (65, 105, 225)
+    afont = pygame.font.SysFont('arial', 25)
+
+
+    input_box = pygame.Rect(50, 80, 300, 40)
+    username = "" 
+    active = True
+
+    button_rect = pygame.Rect(150, 140, 100, 40)
+    button_hover = False
+
+    running2 = True 
+    while running2:
+        screen.fill(white)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    if username.strip():
+                        return username.strip()
+                elif event.key == pygame.K_BACKSPACE:
+                    username = username[:-1]
+                else:
+                    if len(username)<20:
+                        username += event.unicode
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if button_rect.collidepoint(event.pos):
+                    if username.strip():
+                        return username.strip()
+                    
+        mouse_pos = pygame.mouse.get_pos()
+        button_hover = button_rect.collidepoint(mouse_pos)
+
+        title_surface = afont.render("Enter Username", True, black)
+        title_rect = title_surface.get_rect(center=(400//2,30))
+        screen.blit(title_surface, title_rect)
+
+        pygame.draw.rect(screen, gray if not active else blue, input_box, 2)
+        text_surface = afont.render(username, True, black)
+        screen.blit(text_surface, (input_box.x+5, input_box.y+8))
+
+        if active and pygame.time.get_ticks() % 1000 < 500:
+            cursor_x = input_box.x+5 + text_surface.get_width()
+            pygame.draw.line(screen, black,
+                             (cursor_x, input_box.y+5),
+                             (cursor_x, input_box.y+35), 2)
+            
+        button_color = dark_blue if button_hover else blue
+        pygame.draw.rect(screen, button_color, button_rect)
+        pygame.draw.rect(screen, black, button_rect, 2)
+        button_text = font.render("Submit", True, white)
+        button_text_rect = button_text.get_rect(center = button_rect.center)
+        screen.blit(button_text, button_text_rect)
+
+        pygame.display.flip()
+        clock.tick(60)
+
+
 
 def main_menu():
     start_button = pygame.transform.scale(load_image('backround/start_default.png'),(150,60))
@@ -252,8 +321,10 @@ def main():
                 asteroid.reset()
                 if lives <= 0:
                     if score > on_leaderbord or rank_amm < 10:
-                        maneger.draw_ui(screen)
-                        add_player(input("Enter Name: "), score)
+                        '''username = get_username()
+                        print(type(username))
+                        add_player(username, score)'''
+                        add_player(input("username"), score)
                     running = False
 
         screen.blit(bg_imgs[bg_index], (0,0))

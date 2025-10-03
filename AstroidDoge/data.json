@@ -11,39 +11,44 @@
       "rank": 2
     },
     {
+      "name": "hiii",
+      "score": 345,
+      "rank": 3
+    },
+    {
       "name": "why",
       "score": 330,
-      "rank": 3
+      "rank": 4
+    },
+    {
+      "name": "tester",
+      "score": 330,
+      "rank": 5
     },
     {
       "name": "ab",
       "score": 255,
-      "rank": 4
+      "rank": 6
     },
     {
       "name": "abb",
       "score": 240,
-      "rank": 5
+      "rank": 7
+    },
+    {
+      "name": "aaaa",
+      "score": 195,
+      "rank": 8
+    },
+    {
+      "name": "gdhjklhgj",
+      "score": 195,
+      "rank": 9
     },
     {
       "name": "aaa",
       "score": 180,
-      "rank": 6
-    },
-    {
-      "name": "a",
-      "score": 165,
-      "rank": 7
-    },
-    {
-      "name": "a",
-      "score": 120,
-      "rank": 8
-    },
-    {
-      "name": "test",
-      "score": 60,
-      "rank": 9
+      "rank": 10
     }
   ]
 }
