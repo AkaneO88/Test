@@ -60,11 +60,11 @@ def get_username():
     afont = pygame.font.SysFont('arial', 25)
 
 
-    input_box = pygame.Rect(50, 80, 300, 40)
+    input_box = pygame.Rect(100, 220, 300, 40)
     username = "" 
     active = True
 
-    button_rect = pygame.Rect(150, 140, 100, 40)
+    button_rect = pygame.Rect(200, 275, 100, 40)
     button_hover = False
 
     running2 = True 
@@ -93,7 +93,7 @@ def get_username():
         button_hover = button_rect.collidepoint(mouse_pos)
 
         title_surface = afont.render("Enter Username", True, black)
-        title_rect = title_surface.get_rect(center=(200,30))
+        title_rect = title_surface.get_rect(center=(250, 180))
         screen2.blit(title_surface, title_rect)
 
         pygame.draw.rect(screen2, gray if not active else blue, input_box, 2)
@@ -276,6 +276,13 @@ start_img_rect = start_img.get_rect()
 start_img_rect.center = (250,250)
 
 def main():
+    global score, level, Ast_spd, level_cap
+
+    score = 0
+    level = 1
+    Ast_spd = 1
+    level_cap = 1000
+
     running = True
     lives = 6
     bg_index = 0
