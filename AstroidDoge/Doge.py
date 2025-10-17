@@ -49,7 +49,7 @@ def load_image(path):
         raise SystemExit(e)
     
 def get_username():
-    screen2 = pygame.display.set_mode((400, 200))
+    screen2 = pygame.display.set_mode((Width, Height))
     pygame.display.set_caption("Enter Username! You're on the leaderbord!!")
 
     white = (255,255, 255)
@@ -69,7 +69,7 @@ def get_username():
 
     running2 = True 
     while running2:
-        screen.fill(white)
+        screen2.fill(white)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -93,25 +93,25 @@ def get_username():
         button_hover = button_rect.collidepoint(mouse_pos)
 
         title_surface = afont.render("Enter Username", True, black)
-        title_rect = title_surface.get_rect(center=(400//2,30))
-        screen.blit(title_surface, title_rect)
+        title_rect = title_surface.get_rect(center=(200,30))
+        screen2.blit(title_surface, title_rect)
 
-        pygame.draw.rect(screen, gray if not active else blue, input_box, 2)
+        pygame.draw.rect(screen2, gray if not active else blue, input_box, 2)
         text_surface = afont.render(username, True, black)
-        screen.blit(text_surface, (input_box.x+5, input_box.y+8))
+        screen2.blit(text_surface, (input_box.x+5, input_box.y+8))
 
         if active and pygame.time.get_ticks() % 1000 < 500:
             cursor_x = input_box.x+5 + text_surface.get_width()
-            pygame.draw.line(screen, black,
+            pygame.draw.line(screen2, black,
                              (cursor_x, input_box.y+5),
                              (cursor_x, input_box.y+35), 2)
             
         button_color = dark_blue if button_hover else blue
-        pygame.draw.rect(screen, button_color, button_rect)
-        pygame.draw.rect(screen, black, button_rect, 2)
-        button_text = font.render("Submit", True, white)
+        pygame.draw.rect(screen2, button_color, button_rect)
+        pygame.draw.rect(screen2, black, button_rect, 2)
+        button_text = afont.render("Submit", True, white)
         button_text_rect = button_text.get_rect(center = button_rect.center)
-        screen.blit(button_text, button_text_rect)
+        screen2.blit(button_text, button_text_rect)
 
         pygame.display.flip()
         clock.tick(60)
@@ -172,6 +172,7 @@ def add_player(name, score):
     data['leaderboard'].append({'name': name, 'score': score})
     data = update_ranks(data)
     save_leaderboard(data)
+    print(f"Player {name} with score: {score} added to the leaderborad")
 
 def update_ranks(data):
     sorted_players = sorted(
@@ -283,9 +284,10 @@ def main():
     data = load_leaderboard()
     if data['leaderboard']:
         on_leaderbord = data['leaderboard'][-1]['score']
-        rank_amm = data['leaderboard'][-1]['rank']
-
-    else: on_leaderbord = 0
+        rank_amm = len(data['leaderboard'])
+    else: 
+        on_leaderbord = 0
+        rank_amm = 0 
 
 
     rocket = Rocket()
@@ -320,11 +322,9 @@ def main():
                 hit_sound.play()
                 asteroid.reset()
                 if lives <= 0:
-                    if score > on_leaderbord or rank_amm < 10:
-                        '''username = get_username()
-                        print(type(username))
-                        add_player(username, score)'''
-                        add_player(input("username"), score)
+                    if rank_amm < 10 or score > on_leaderbord:
+                        username = get_username()
+                        add_player(username, score)
                     running = False
 
         screen.blit(bg_imgs[bg_index], (0,0))
@@ -354,6 +354,6 @@ def main():
     pygame.time.wait(3000)
     pygame.quit()
     sys.exit()
-
+##make screen biger after g-o and show leaderbord
 if __name__ == "__main__":
     main_menu()
